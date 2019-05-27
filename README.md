@@ -1,6 +1,8 @@
 # car_catalog_app
 
 Test android project in Flutter.
+In the application, you can add, delete and edit car cards. You can also delete a card in the glave page.
+
 ![Screenshot_1558939867](https://user-images.githubusercontent.com/27908248/58401047-f96aa680-8086-11e9-9c86-8a296ad399fd.png)
 ![Screenshot_1558939871](https://user-images.githubusercontent.com/27908248/58401056-038ca500-8087-11e9-8453-2053fbf12885.png)
 ![Screenshot_1558939877](https://user-images.githubusercontent.com/27908248/58401072-0f786700-8087-11e9-80d8-70f0a13151ba.png)
