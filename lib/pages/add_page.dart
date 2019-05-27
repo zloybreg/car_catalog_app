@@ -11,6 +11,7 @@ class AddPage extends StatefulWidget {
 
 class _AddPageState extends State<AddPage> { 
 
+  // Создаем ключ для синхронизации форм
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   final Firestore db = Firestore.instance;

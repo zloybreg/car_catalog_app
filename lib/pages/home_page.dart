@@ -16,16 +16,16 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   
+  // Инстан базы, можно было отдельно вынести как класс DbService
+  // связи с ограничением времени пока реализовано так
   final Firestore db = Firestore.instance;
-
-  String id;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xFF262627),
       body: ListView(
-        //padding: EdgeInsets.all(8.0),          
+        padding: EdgeInsets.all(8.0),          
         children: <Widget>[
           SizedBox(
             height: 20.0,
@@ -40,12 +40,14 @@ class _MyHomePageState extends State<MyHomePage> {
             padding: const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 0),
             child: Divider(color: Color(0xFFDDDDDD),),
           ),
+          // Отправляем запрос в БД на вложенные документы 'cars'
+          // и перебираем их строя карточку
           streamBuilder(context)
         ],
       ),
       floatingActionButton: FloatingActionButton(
+        // Перенаправление на страницу добавления машин
         onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => AddPage())),
-        tooltip: 'Increment',
         child: Icon(Icons.add, size: 30.0,),
         backgroundColor: Color(0xFFDE3371),        
       ),
@@ -55,11 +57,12 @@ class _MyHomePageState extends State<MyHomePage> {
 
   streamBuilder(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
+      // Запрос в БД
       stream: db.collection('cars').snapshots(),
       builder: (context, snapshot) {       
-
+        
         if (snapshot.hasData && snapshot.data.documents != null) {
-          
+          // из потока получаем массив машин
           List<DocumentSnapshot> snapList = snapshot.data.documents;
           
           return Container(        
@@ -67,17 +70,23 @@ class _MyHomePageState extends State<MyHomePage> {
             /*child: Column(
               children: snapshot.data.documents.map((doc) => buildItem(doc, context)).toList(),
             )*/
+            // Строим листвью по намшим данным
             child:ListView.builder(
               physics: ScrollPhysics(),
               shrinkWrap: true,
               itemCount: snapList.length,
               itemBuilder: (BuildContext context, int index) {
                 var doc = snapshot.data.documents[index];
+                // Каждый элемент создаем как класс Car. Это именованный конструктов
                 Car car = Car.fromSnapshot(doc);
 
+                // Для перевода ключей на русский язык
                 ParameterNameTranslator translatedCar = ParameterNameTranslator.car(car);
                 //translatedCar.toMap().forEach((k,v) => print('Key: $k, Value: $v'));
-                //car.toJson().forEach((k,v) => print('Key: $k, Value: $v'));     
+                //car.toJson().forEach((k,v) => print('Key: $k, Value: $v')); 
+
+                // Тут строим карточку widget Card
+                // Так же добавляем удаление по свайпу
                 return Dismissible(
                   key: Key(car.key),
                   onDismissed: (direction) {
@@ -125,9 +134,10 @@ class _MyHomePageState extends State<MyHomePage> {
                               child: Container(
                                 child: Row(
                                   children: <Widget>[
-                                    //Text('asd'),
+                                    // Перебираем ключи ассоциативного массива данных машин в Текст
                                     keyName(translatedCar),
                                     SizedBox(width: 5.0,),
+                                    // Перебираем значения ассоциативного массива данных машин в Текст
                                     valName(car)
                                   ],
                                 ),

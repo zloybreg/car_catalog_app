@@ -16,6 +16,7 @@ class EditPage extends StatefulWidget {
 
 class _EditPageState extends State<EditPage> {
 
+  // Создаем ключ для синхронизации форм
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   final Firestore db = Firestore.instance;
@@ -93,7 +94,7 @@ class _EditPageState extends State<EditPage> {
       ),
     );
   }
-
+  // Обновляем полученный в конструкторе машины, создаем class Car и обновляем все поля
   void updateData(String key) async {
     if (_formKey.currentState.validate()) {      
       _formKey.currentState.save();
@@ -105,8 +106,8 @@ class _EditPageState extends State<EditPage> {
     
   }
 
+  // Создаем поля для ввода
   Widget buildTextFormFields() {
-
     const double textFormBorderRadius = 10.0;
     const double textFormHeight = 50.0;
     const EdgeInsets textFormPadding = EdgeInsets.fromLTRB(30.0, 10.0, 30.0, 10.0);

@@ -6,6 +6,8 @@ import 'package:car_catalog_app/suplemental/user_define_icons.dart';
 
 import 'edit_page.dart';
 
+// Страница редактирования карточки
+// На вход подается выбранная "машина"
 class ViewPage extends StatefulWidget {
   final Car car;
 
@@ -17,9 +19,8 @@ class ViewPage extends StatefulWidget {
 
 class _ViewStatePage extends State<ViewPage> {
 
+  // инстанс подключения
   final Firestore db = Firestore.instance;
-
-  String id;
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +38,7 @@ class _ViewStatePage extends State<ViewPage> {
               SizedBox(
                 width: 40.0,
               ),
+              // Кнопка назад
               FlatButton(
                 child: Icon(
                   UserDefineIsons.arrow_icon, 
@@ -61,10 +63,12 @@ class _ViewStatePage extends State<ViewPage> {
             child: Divider(color: Color(0xFFDDDDDD),),
           ),
           SizedBox(height: 20.0,),
+          // Строим карточку машины
           buildItem(widget.car),
           Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
+                // Если нажимаем кнопку редактировать - перенаправляем на страницу редактирования
                 RaisedButton(
                   onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => EditPage(widget.car))),
                   child: Text(
@@ -76,7 +80,9 @@ class _ViewStatePage extends State<ViewPage> {
                   borderRadius: BorderRadius.circular(15.0)
                 ), 
                 ),
+                // Отступ
                 SizedBox(width: 8),
+                // Удаление данных о карточке
                 FlatButton(
                   onPressed: () {
                     deleteData(widget.car);
@@ -94,6 +100,7 @@ class _ViewStatePage extends State<ViewPage> {
     );
   }
 
+  // Карточка машины
   Widget buildItem(Car car) {
 
     ParameterNameTranslator translatedCar = ParameterNameTranslator.car(car);
@@ -104,6 +111,7 @@ class _ViewStatePage extends State<ViewPage> {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(15.0)
       ),
+      // Добавляем отступы
       child: Padding(
         padding: const EdgeInsets.fromLTRB(14.0, 9.0, 14.0, 9.0),
         child: Column(
@@ -122,9 +130,11 @@ class _ViewStatePage extends State<ViewPage> {
               child: Container(
                 child: Row(
                   children: <Widget>[
-                    //Text('asd'),
+                    // Перебираем ключи ассоциативного массива данных машин в Текст
                     keyName(translatedCar),
+                    // Отступ
                     SizedBox(width: 5.0,),
+                    // Перебираем значения ассоциативного массива данных машин в Текст
                     valName(car)
                   ],
                 ),
@@ -135,12 +145,7 @@ class _ViewStatePage extends State<ViewPage> {
       ),
     );
   }
-
-  void deleteData(Car car) async {
-    await db.collection('cars').document(car.key).delete();
-    setState(() => id = null);
-  }
-
+  
   Widget keyName(ParameterNameTranslator car) {
     List<String> listKey = List<String>();
     
@@ -150,13 +155,14 @@ class _ViewStatePage extends State<ViewPage> {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: listKey.map((carParameter) => Text(
-          '$carParameter: ' ?? 'bnm',
+          // Если каким-то образом пришли пустые данные добавляем заполнитель
+          '$carParameter: ' ?? '#',
           style: TextStyle(fontSize: 12, color: Color(0xFFDDDDDD), fontFamily: 'OpenSans'),
         )
       ).toList(),
     );
   }
-
+  
   Widget valName(Car car) {
     List<String> listVal = List<String>();
     
@@ -166,10 +172,15 @@ class _ViewStatePage extends State<ViewPage> {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: listVal.map((car) => Text(
-          car ?? 'bnm', 
+          car ?? '#', 
           style: TextStyle(fontSize: 12, color: Color(0xFFFFFFFF), fontWeight: FontWeight.bold, fontFamily: 'OpenSans'),
         )
       ).toList(),
     );
+  }
+
+  // Удаление данных о карточке
+  void deleteData(Car car) async {
+    await db.collection('cars').document(car.key).delete();
   }
 }
