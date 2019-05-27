@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "922160467285",
+    "firebase_url": "https://car-catalog-app.firebaseio.com",
+    "project_id": "car-catalog-app",
+    "storage_bucket": "car-catalog-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:922160467285:android:a8aff770b8de65e2",
+        "android_client_info": {
+          "package_name": "com.example.car_catalog_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "922160467285-dcnngns2ilrg2b96p3mb2vtec4iafj84.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAl-5RlK2HoegUWtZUnzfN1QIzLDNLe2E8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "922160467285-dcnngns2ilrg2b96p3mb2vtec4iafj84.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
