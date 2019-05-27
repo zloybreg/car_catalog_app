@@ -3,7 +3,7 @@
 Test android project in Flutter.
 In the application, you can add, delete and edit car cards. You can also delete a card in the glave page.
 
-<img src="images/add.png" width="100">
+<img src="images/main.png" width="150"> <img src="images/view.png" width="150"> <img src="images/edit.png" width="150"> <img src="images/add.png" width="150">
 
 ## Getting Started
 
